@@ -149,6 +149,7 @@ def define_argparse(config_file="params.yaml", default_config="default_params.ya
     log_group.add_argument("--resume_log", action="store_true", help="Resume logging jobs if available.\n"
                                                                      "Wandb: https://docs.wandb.ai/ref/python/init resume='auto'.\n"
                                                                      "ClearML: https://clear.ml/docs/latest/docs/references/sdk/task/#taskinit continue_last_task=True.")
+    log_group.add_argument("--project_name", help="Project name for wandb logging")
     # ------ Experiment Params ---------
     file_group.add_argument("--log_dir", type=str, required=True,
                             help="Name of the experiment e.g. tus_po_8p_dn19_up. Should also be the branch name and the folder name.")
