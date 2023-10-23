@@ -1,9 +1,9 @@
 cell_size: [100, 100]
-dataset: culane
+dataset: tusample
 dvc: ../../../../../dvc_experiment_mgmt
 epoch: 10
 img_height: 320
-log_dir: culane_po_8p_dn19
+log_dir: tus_po_8p_dn19
 max_n: 100
 nondeterministic: true
 root: ../../../../
