@@ -93,7 +93,7 @@ class DatasetFactory:
             if dataset.is_available():
                 Log.debug("Load data from %s with batch=%d" % (dataset_enum, args.batch_size))
                 loader = DataLoader(dataset, batch_size=args.batch_size, shuffle=shuffle, drop_last=True,
-                                    num_workers=1, pin_memory=False)
+                                    num_workers=3, pin_memory=False)
                 return dataset, loader
             else:
                 if only_available:
