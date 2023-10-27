@@ -18,16 +18,47 @@
 # ---------------------------------------------------------------------------- #
 # ----------------------------- COPYRIGHT ------------------------------------ #
 # ---------------------------------------------------------------------------- #
-FROM python:3.8-bullseye
+
+##### WITHOUT CONDA ENVIRONMENT #####
+
+# FROM python:3.8-bullseye
+# # RUN apt update \
+# #     && apt install git ffmpeg libsm6 libxext6 -y
+# RUN python -m pip install --upgrade pip
+# # RUN pip install virtualenv
+
+# COPY . /usr/YOLinO/yolino/
+# WORKDIR /usr/YOLinO/yolino/
+
+# RUN pip install -e /usr/YOLinO/yolino/
+# RUN export GIT_PYTHON_REFRESH=quiet
+# RUN export DATASET_TUSIMPLE="/usr/YOLinO/tus_po_8p_dn19/TUSimple"
+# RUN export PYTHONPATH=""
+
+
+##### WITH CONDA ENVIRONMENT #####
+
+FROM continuumio/miniconda3:latest
+
 RUN apt update \
     && apt install git ffmpeg libsm6 libxext6 -y
 RUN python -m pip install --upgrade pip
-RUN pip install virtualenv
 
-RUN mkdir /usr/bin/deps/
-RUN mkdir /usr/bin/deps/src
-COPY setup.cfg /usr/bin/deps/setup.cfg
-RUN echo "from setuptools import setup\nsetup()" > /usr/bin/deps/setup.py
-RUN pip install -e /usr/bin/deps
+RUN conda create --name env_yolino python=3.8 --yes
 
-RUN export GIT_PYTHON_REFRESH=quiet
+ENV PATH /opt/conda/bin:$PATH
+
+RUN /bin/bash -c "source activate env_yolino"
+
+COPY . /usr/YOLinO/yolino/
+WORKDIR /usr/YOLinO/yolino/
+
+RUN pip install -e .
+# RUN conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.6 -c pytorch -c conda-forge
+
+RUN echo "Make sure torch is installed:"
+RUN python -c "import torch"
+
+ENV GIT_PYTHON_REFRESH=quiet
+ENV DATASET_TUSIMPLE="/usr/YOLinO/tus_po_8p_dn19/TUSimple"
+ENV PYTHONPATH=""
