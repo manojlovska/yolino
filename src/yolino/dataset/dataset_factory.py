@@ -32,12 +32,14 @@ class DatasetFactory:
     from yolino.dataset.caltech_pytorch import CaltechDataSet
     from yolino.dataset.cifar10_pytorch import CifarDataSet
     from yolino.dataset.culane_pytorch import CULaneDataSet
+    from yolino.dataset.dais_dataset import DAISDataSet
     datasets = {
         Dataset.CULANE: CULaneDataSet,
         Dataset.CIFAR: CifarDataSet,
         Dataset.CALTECH: CaltechDataSet,
         Dataset.TUSIMPLE: TusimpleDataset,
         Dataset.ARGOVERSE2: Argoverse2Dataset,
+        Dataset.DAIS: DAISDataSet,
     }
 
     @classmethod

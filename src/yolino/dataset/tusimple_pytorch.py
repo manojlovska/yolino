@@ -161,11 +161,15 @@ class TusimpleDataset(DatasetInfo):
 
         # Tusimple GT runs from horizon to bottom of the image.
         # We want to encode the driving direction in the arrows and thus reverse the GT.
+        print("self.lanes[idx]: ", self.lanes[idx])
+        
         for i in range(len(self.lanes[idx])):
             gridable_lines[i, :, 1] = torch.tensor(list(reversed(self.lanes[idx][i])))
             gridable_lines[i, :, 0] = torch.tensor(list(reversed(self.h_samples[idx])))
 
         gridable_lines[gridable_lines[:, :, 1] < 0] = torch.tensor([torch.nan, torch.nan])
+        print("Gridable lines:", gridable_lines)
+        print(" ")
 
         if False:
             # import matplotlib
@@ -215,6 +219,7 @@ class TusimpleDataset(DatasetInfo):
             del cv_image
 
         lines = self.__get_labels__(idx)
+        print("Lines: ", lines)
         image, lines, params = self.__augment__(idx, image, lines)
 
         try:
@@ -232,7 +237,7 @@ class TusimpleDataset(DatasetInfo):
             Log.debug("\tImage: %s" % str(image.shape))  # (3, h, w)
             Log.debug("\tGrid Lines: %s" % str(grid_tensor.shape))  # (grid_shape, preds, coords)
 
-        return image, grid_tensor, self.file_names[idx], duplicates.dict(), params
+        return image, grid_tensor, self.file_names[idx], {"total_duplicates_in_image":0}, params
 
     def check_img_size(self):
         if not np.all(math.isclose(np.divide(*self.args.img_size), self.height() / self.width())) or \

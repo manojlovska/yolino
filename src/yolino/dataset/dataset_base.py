@@ -122,6 +122,7 @@ class DatasetInfo(torchDataset, metaclass=ABCMeta):
         if not os.path.isdir(dataset_path):
             raise FileNotFoundError(
                 "Dataset path %s does not exist. Try to set with $%s" % (dataset_path, env_var))
+        # print(dataset_path) ###########################################################################
 
         return dataset_path
 
@@ -304,7 +305,7 @@ class DatasetInfo(torchDataset, metaclass=ABCMeta):
         return image
 
     def __construct_filename__(self, filename):
-        return os.path.join(self.dataset_path, filename)
+        return os.path.join(self.dataset_path, self.split, filename)
 
     def get_full_size_image(self, idx=-1, filename=None):
         import cv2

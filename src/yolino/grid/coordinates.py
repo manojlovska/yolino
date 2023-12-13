@@ -34,8 +34,11 @@ def validate_input_structure(data, coordinate: CoordinateSystem, args=None):
             if len(data) > 1:
                 raise ValueError("Please provide one batch at a time to the grid. We've got %s" % str(data.shape))
 
+            # print("Data: ", data)
             for batch in data:
+                # print("Batch: ", batch)
                 for instance in batch:
+                    # print("Instance: ", instance)
                     if len(np.shape(instance)) != 2:
                         raise AttributeError("%s, but have (?,?, %s)" % (str(coordinate), str(np.shape(instance))))
 

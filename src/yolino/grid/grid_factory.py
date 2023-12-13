@@ -87,6 +87,7 @@ class GridFactory:
                         "predictors per cell (%s)!" % (args.num_predictors))
 
         points_coords = coords.clone(LINE.POINTS)
+        print("points_coords: ", points_coords)
         for b_idx, batch in enumerate(geometry):
             for instance_id, instance in enumerate(batch):
                 valid_indices = np.where(np.logical_not(np.isnan(instance[:, 0])))  # check if first value is nan

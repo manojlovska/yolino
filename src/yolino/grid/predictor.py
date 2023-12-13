@@ -57,6 +57,7 @@ class Predictor:
             raise ValueError("%s is not one_hot" % self.label)
 
         self.linerep = linerep
+        print("self.linerep: ", self.linerep)
 
         # for labels this is the polyline ID!
         self.confidence = confidence.item() if type(confidence) == torch.Tensor else confidence
@@ -79,6 +80,10 @@ class Predictor:
         else:
             self.start = np.array(values[0:2], dtype=float)
             self.end = np.array(values[2:4], dtype=float)
+
+        # print("self.values: ", values)
+        # print("self.start: ", self.start)
+        # print("self.end: ", self.end)
 
         return True
 
@@ -194,6 +199,8 @@ class Predictor:
 
     def assert_is_upwards(self):
         if abs(self.angle()) < math.pi / 2.:
+            print("abs(self.angle()): ", abs(self.angle()))
+            print("math.pi / 2. : ", math.pi / 2.)
             raise ValueError("%s has invalid orientation with %s" % (self, self.angle()))
 
     @classmethod
@@ -214,10 +221,16 @@ class Predictor:
             conf_idx = input_coords.get_position_within_prediction(Variables.CONF)
         else:
             length = input_coords.get_length()
+            print("length: ", length)
             coords_in_data = input_coords.vars()
+            print("coords_in_data: ", coords_in_data)
             geom_idx = input_coords.get_position_of(Variables.GEOMETRY)
+            print("geom_idx: ", geom_idx)
             label_idx = input_coords.get_position_of(Variables.CLASS)
+            print("label_idx: ", label_idx)
             conf_idx = input_coords.get_position_of(Variables.CONF)
+            print("conf_idx: ", conf_idx)
+            print("line_segment: ", line_segment)
 
         if not np.equal(np.shape(line_segment), length):
             raise ValueError("Geometry failed for %s line %s. "

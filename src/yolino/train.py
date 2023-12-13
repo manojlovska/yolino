@@ -65,6 +65,7 @@ if __name__ == "__main__":
                     inference_start = timeit.default_timer()
                     _, preds = trainer(fileinfo, images, grid_tensor, epoch=epoch, image_idx_in_batch=i,
                                        first_run=(i == 0))
+                    Log.error(f"Grid tensor shape: ${grid_tensor.size()}")
                     # if epoch == 1:
                     Log.time(key="infer", value=timeit.default_timer() - inference_start)
 

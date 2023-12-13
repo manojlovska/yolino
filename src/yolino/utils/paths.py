@@ -232,7 +232,7 @@ class Paths:
         with self._lock:
             if not os.path.isdir(folder):
                 Log.debug("Create %s" % folder)
-                os.makedirs(folder)
+                os.makedirs(folder, exist_ok=True)
         return file_path
 
     def generate_anchors_image_file_path(self, dataset, anchor_vars, num_predictors, anchors, scale):

@@ -73,6 +73,7 @@ class Dataset(BaseEnum):
     CULANE = "culane"
     CIFAR = "cifar"
     CALTECH = "caltech"
+    DAIS = "dais"
 
 
 class CoordinateSystem(BaseEnum):
